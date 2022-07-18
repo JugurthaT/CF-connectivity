@@ -37,7 +37,7 @@ jwt_conn = response_conn.json()["access_token"]
 ###### Step 3: Make a call to backend system via SAP CC to read data ##
 #######################################################################
 ##Set up basic auth for SAP System - Username and Password
-#onpremise_auth = requests.auth.HTTPBasicAuth('<enter your SAP Username of the on-premise system>' , '<Enter the password>!')
+onpremise_auth = requests.auth.HTTPBasicAuth('admin' , 'password!')
 ##Enter the exact path to your OData service in the SAP System using the virtual host:port details mentioned in the SAP Cloud Connector
 url_cc =  'http://virtualhost2:80'
 ##create a dict with proxy relevant information
