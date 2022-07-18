@@ -49,9 +49,23 @@ headers = {
 'cache-control': 'no-cache'
 }
 ##make a get request using the Virtual ODATA url using the proxy details , header and basic authorization for Onpremise system
-response = requests.get( url_cc, proxies=proxyDict, headers=headers, auth = onpremise_auth)
-##conver the data 
+#response = requests.get( url_cc, proxies=proxyDict, headers=headers, auth = onpremise_auth)
+response = requests.get( "http://ipinfo.io")
+print( "response.status_code",flush=True)
+print( response.status_code,flush=True)
+print(  response,flush=True)
 data_response = json.loads(response.text)
+print( data_response,flush=True)
+##conver the data 
+deb=url_cc 
+#print (proxyDict,flush=True)
+#print ("headers",flush=True)
+#print (headers,flush=True)
+#print ("auth",flush=True)
+#print (onpremise_auth,flush=True)
+#print ("done auth",flush=True)
+#data_response = json.loads(response.text)
+#print("response: "+ data_response) 
 ##manually added
 
 if(jwt_conn is None):
@@ -62,7 +76,7 @@ if(jwt_conn is None):
 ######################################################################
 @app.route('/')
 def index():
-  return jwt_conn
+  return data_response
 
 if __name__ == '__main__':
 	if cf_port is None:
