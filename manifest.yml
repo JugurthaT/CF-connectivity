@@ -3,7 +3,5 @@ applications:
 - memory: 128MB
   disk_quota: 256MB
   random-route: true
-services:
-   - <Name of your XSUAA service instance>
-   - <Name of your connectivity instance>
-    
+  services:
+    - instance1 
