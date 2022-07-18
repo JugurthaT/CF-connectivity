@@ -39,19 +39,19 @@ jwt_conn = response_conn.json()["access_token"]
 ##Set up basic auth for SAP System - Username and Password
 #onpremise_auth = requests.auth.HTTPBasicAuth('<enter your SAP Username of the on-premise system>' , '<Enter the password>!')
 ##Enter the exact path to your OData service in the SAP System using the virtual host:port details mentioned in the SAP Cloud Connector
-#url_cc =  'http://vhost.atosorigin-ica.com:8080/sap/opu/odata/sap/Z_TRANSPORTS_CDS/Z_TRANSPORTS?$format=json'
+url_cc =  'http://virtualhost2:80'
 ##create a dict with proxy relevant information
-#proxyDict = { 'http' : proxy_url }
+proxyDict = { 'http' : proxy_url }
 ##create a header with authorization to the proxy server with the JWT retrieved in Step 2
-#headers = {
-#'content-type': 'application/json',
-#'Proxy-Authorization': 'Bearer ' + jwt_conn,
-#'cache-control': 'no-cache'
-#}
+headers = {
+'content-type': 'application/json',
+'Proxy-Authorization': 'Bearer ' + jwt_conn,
+'cache-control': 'no-cache'
+}
 ##make a get request using the Virtual ODATA url using the proxy details , header and basic authorization for Onpremise system
-#response = requests.get( url_cc, proxies=proxyDict, headers=headers, auth = onpremise_auth)
+response = requests.get( url_cc, proxies=proxyDict, headers=headers, auth = onpremise_auth)
 ##conver the data 
-#data_response = json.loads(response.text)
+data_response = json.loads(response.text)
 ##manually added
 
 if(jwt_conn is None):
