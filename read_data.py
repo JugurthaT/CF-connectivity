@@ -21,6 +21,7 @@ conn_service = env.get_service(name='instance1')
 conn_sUaaCredentials = conn_service.credentials["clientid"] + ':' + conn_service.credentials["clientsecret"]
 ## read the On premise proxy host and on premise proxy port for the connectivity service
 proxy_url = conn_service.credentials["onpremise_proxy_host"] + ':' + conn_service.credentials["onpremise_proxy_port"]
+print(proxy_url,flush=True)
 #######################################################################
 ####### Step 2: Request a JWT token to access the connectivity service##
 #######################################################################
@@ -39,7 +40,7 @@ jwt_conn = response_conn.json()["access_token"]
 ##Set up basic auth for SAP System - Username and Password
 onpremise_auth = requests.auth.HTTPBasicAuth('admin' , 'password!')
 ##Enter the exact path to your OData service in the SAP System using the virtual host:port details mentioned in the SAP Cloud Connector
-url_cc =  'http://virtualhost2:80'
+url_cc =  'http://virtualhost3:8000'
 
 ##create a dict with proxy relevant information
 proxyDict = { 'http' : proxy_url }
@@ -51,22 +52,14 @@ headers = {
 }
 ##make a get request using the Virtual ODATA url using the proxy details , header and basic authorization for Onpremise system
 #response = requests.get( url_cc, proxies=proxyDict, headers=headers, auth = onpremise_auth)
-response = requests.get( "http://ipinfo.io")
+response = requests.get( url_cc, proxies=proxyDict, headers=headers, auth = onpremise_auth)
 print( "response.status_code",flush=True)
 print( response.status_code,flush=True)
 print(  response,flush=True)
-data_response = response.text()
+data_response = response.text
 print( data_response,flush=True)
 ##conver the data 
 deb=url_cc 
-#print (proxyDict,flush=True)
-#print ("headers",flush=True)
-#print (headers,flush=True)
-#print ("auth",flush=True)
-#print (onpremise_auth,flush=True)
-#print ("done auth",flush=True)
-#data_response = json.loads(response.text)
-#print("response: "+ data_response) 
 ##manually added
 
 if(jwt_conn is None):
@@ -77,6 +70,11 @@ if(jwt_conn is None):
 ######################################################################
 @app.route('/')
 def index():
+  return data_response
+@app.route('/<path:path>')
+def index2(path):
+  print("path printing*************************")
+  print(path)
   return data_response
 
 if __name__ == '__main__':
