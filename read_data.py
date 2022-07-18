@@ -40,6 +40,7 @@ jwt_conn = response_conn.json()["access_token"]
 onpremise_auth = requests.auth.HTTPBasicAuth('admin' , 'password!')
 ##Enter the exact path to your OData service in the SAP System using the virtual host:port details mentioned in the SAP Cloud Connector
 url_cc =  'http://virtualhost2:80'
+
 ##create a dict with proxy relevant information
 proxyDict = { 'http' : proxy_url }
 ##create a header with authorization to the proxy server with the JWT retrieved in Step 2
@@ -54,7 +55,7 @@ response = requests.get( "http://ipinfo.io")
 print( "response.status_code",flush=True)
 print( response.status_code,flush=True)
 print(  response,flush=True)
-data_response = json.loads(response.text)
+data_response = response.text()
 print( data_response,flush=True)
 ##conver the data 
 deb=url_cc 
