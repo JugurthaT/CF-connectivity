@@ -1,6 +1,7 @@
 ---
 applications:
-- memory: 128MB
+- name: connectapp
+  memory: 128MB
   disk_quota: 256MB
   random-route: true
   services:

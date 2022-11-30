@@ -1,10 +1,11 @@
 from flask import Flask , render_template 
 from cfenv import AppEnv
+import sys
 import os
 import requests
 import base64
 import json
-
+import time
 #create an app using flask lib and also get the port info for later use
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -51,31 +52,35 @@ headers = {
 'cache-control': 'no-cache'
 }
 ##make a get request using the Virtual ODATA url using the proxy details , header and basic authorization for Onpremise system
-#response = requests.get( url_cc, proxies=proxyDict, headers=headers, auth = onpremise_auth)
-response = requests.get( url_cc, proxies=proxyDict, headers=headers, auth = onpremise_auth)
-print( "response.status_code",flush=True)
-print( response.status_code,flush=True)
-print(  response,flush=True)
-data_response = response.text
-print( data_response,flush=True)
-##conver the data 
-deb=url_cc 
-##manually added
-
-if(jwt_conn is None):
-  print("no connection")
-  data_response="no connection"
+def call_url():
+  response = requests.get( url_cc, proxies=proxyDict, headers=headers, auth = onpremise_auth)
+  print( "response.status_code",flush=True)
+  print( response.status_code,flush=True)
+  print(  response,flush=True)
+  data_response = response.text
+  print( data_response,flush=True)
+  ##conver the data 
+  deb=url_cc 
+  ##manually added
+  return data_response
+  if(jwt_conn is None):
+    print("no connection")
+    data_response="no connection"
 ######################################################################
 ##### Step 4: Return the data and run the app                       ##
 ######################################################################
 @app.route('/')
 def index():
-  return data_response
+  #return data_response
+   return call_url()
 @app.route('/<path:path>')
 def index2(path):
-  print("path printing*************************")
-  print(path)
-  return data_response
+  i=0
+  while i <=10:
+    print("sleeping 1 second for the time ",i)
+    time.sleep(1)
+    i+=1
+  sys.exit(1)
 
 if __name__ == '__main__':
 	if cf_port is None:
